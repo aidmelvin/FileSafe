@@ -1,7 +1,4 @@
 
-# TODO:
-# (done) create encryptor feature
-# (done) Create feature to save password with file
 # create unlock feature
 # create feature that detects colons in the file name
 
@@ -18,6 +15,28 @@ root = Tk()
 path = ""
 key = 'TJVxHBrFD6Clmecsek6ZANrxwrLpDamj0yT7qP4PNSg='
 
+encryptDecrypt = 0
+
+def sel():
+    global encryptDecrypt
+    selection = var.get()
+    encryptDecrypt = selection
+    return
+#    selection = var.get()
+#    label.config(text = selection)
+
+var = IntVar()
+R1 = Radiobutton(root, text="Encrypt", variable=var, value=1, command=sel)
+R1.grid(row=1, column=1)
+
+R2 = Radiobutton(root, text="Decrypt", variable=var, value=2, command=sel)
+R2.grid(row=2, column=1)
+
+# label = Label(root)
+# label.pack()
+
+# root.mainloop()
+
 e = Entry(root, width=35, borderwidth=5)
 l = Label(root, text = "Type in your password (up to 128 characters): ", padx = 30, pady = 20)
 
@@ -29,14 +48,21 @@ def removeScreenElements():
     b.grid_remove()
     return
 
-l2 = Label(root, text = "Your file has been successfully encrypted ", padx = 30, pady = 20)
+confirmation_message = ""
+if encryptDecrypt == 1:
+    confirmation_message = "encrypted"
+if encryptDecrypt == 2:
+    confirmation_message = "decrypted"
+
+l2 = Label(root, text = "Your file has been successfully" + confirmation_message, padx = 30, pady = 20)
 b = Button(root, text = "OK", command = removeScreenElements, padx = 30, pady = 20)
 
 def browseFiles():
     global path
     global e
     global l
-    path = filedialog.askopenfilename(title='Select File to be Encrypted')
+    global confirmation_message
+    path = filedialog.askopenfilename(title=('Select File to be' + confirmation_message))
     print('path:', path)
     l.grid(row = 6, column = 1)
     e.grid(row = 6, column = 2)
@@ -92,7 +118,7 @@ def encrypt():
 
 # screen_width = root.winfo_screenwidth()
 # screen_height = root.winfo_screenheight()
-root.title('File Encryptor')
+root.title('FileSafe')
 # root.geometry(str(screen_width) + 'x' + str(screen_height))
 
 root.geometry('1000x650')
@@ -107,13 +133,13 @@ button_explore = Button(root, text = "Choose a file", command = browseFiles, pad
 
 button_encrypt = Button(root, text = "Encrypt!", command = encrypt, padx = 30, pady = 20)
 
-label_file_explorer1.grid(column = 1, row = 1)
-label_file_explorer2.grid(column = 1, row = 2)
-label_file_explorer3.grid(column = 1, row = 3)
-label_file_explorer4.grid(column = 1, row = 4)
+label_file_explorer1.grid(column = 1, row = 3)
+label_file_explorer2.grid(column = 1, row = 4)
+label_file_explorer3.grid(column = 1, row = 5)
+label_file_explorer4.grid(column = 1, row = 6)
 
-button_explore.grid(column = 1, row = 5)
-button_encrypt.grid(column = 1, row = 7)
+button_explore.grid(column = 1, row = 7)
+button_encrypt.grid(column = 1, row = 9)
 
 
 root.mainloop()
