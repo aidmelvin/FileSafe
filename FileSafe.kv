@@ -1,0 +1,46 @@
+
+<MyWidget>:
+    cols:2
+    id:my_widget
+
+    FileChooserListView:
+        id:filechooser
+        on_selection:
+            # Important: filechooser.selection is an array of length 1
+            my_widget.selected(filechooser.selection)
+            # import utils
+            # utils.println(filechooser.selection)
+
+    BoxLayout:
+        orientation: "vertical"
+        Button:
+            text: 'Click For Instructions'
+            # size_hint: None, None
+            # pos_hint: {"y": 0.85}
+            on_release:
+                import webbrowser
+                webbrowser.open('https://enchantedacres.me/encryptor_instructions.html')
+                # webbrowser.open('encryptor_instructions.html')
+        Label:
+            id:label
+            text: 'File chosen: '
+        Label:
+            text: 'Type password in white box below:'
+        TextInput:
+            id:password
+        GridLayout:
+            cols:2
+            Button:
+                text: 'Encrypt!'
+                on_release:
+                    my_widget.encrypt(password.text)
+            Button:
+                text: 'Decrypt!'
+                on_release:
+                    my_widget.decrypt(password.text)
+
+<P>:
+    # Label:
+    #     text: "You pressed the button"
+    #     size_hint: 0.6, 0.2
+    #     pos_hint: {"x":0.2, "top":1}
